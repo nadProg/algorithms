@@ -23,11 +23,9 @@ export const quickSort = (items: number[], direction: 'asc' | 'desc' = 'asc'): n
         middleItems.push(item);
     });
 
-    const sortedAscendingItems = quickSort(lowerItems).concat(...middleItems, ...quickSort(greaterItems));
-
     if (direction === 'desc') {
-        return sortedAscendingItems.reverse();
+        return quickSort(greaterItems, direction).concat(...middleItems, ...quickSort(lowerItems, direction));
     }
 
-    return sortedAscendingItems;
+    return quickSort(lowerItems, direction).concat(...middleItems, ...quickSort(greaterItems, direction));
 }
