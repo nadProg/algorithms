@@ -1,6 +1,6 @@
 import {mergeSort as sort} from "./mergeSort";
 
-describe.skip("mergeSort", () => {
+describe("mergeSort", () => {
     test("should exist", () => {
         expect(sort).toBeDefined()
     })
