@@ -1,10 +1,11 @@
 {
-  "name": "sortings",
+  "name": "algorithms",
   "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "lint:fix": "eslint . --fix",
+    "check-types": "tsc --noEmit",
     "test": "jest"
   },
   "keywords": [],
