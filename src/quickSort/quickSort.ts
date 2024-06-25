@@ -1,24 +1,27 @@
-export const quickSort = (
-  items: number[],
-  direction: 'asc' | 'desc' = 'asc',
-): number[] => {
+import { defaultCompare } from '../defaultCompare';
+import { CompareFunction } from '../types';
+
+export const quickSort = <T>(
+  items: T[],
+  compare: CompareFunction<T> = defaultCompare,
+): T[] => {
   if (items.length <= 1) {
     return items;
   }
 
   const referenceItem = items[0];
 
-  const lowerItems: number[] = [];
-  const middleItems: number[] = [];
-  const greaterItems: number[] = [];
+  const lowerItems: T[] = [];
+  const middleItems: T[] = [];
+  const greaterItems: T[] = [];
 
   items.forEach((item) => {
-    if (item > referenceItem) {
+    if (compare(item, referenceItem) > 0) {
       greaterItems.push(item);
       return;
     }
 
-    if (item < referenceItem) {
+    if (compare(item, referenceItem) < 0) {
       lowerItems.push(item);
       return;
     }
@@ -26,15 +29,8 @@ export const quickSort = (
     middleItems.push(item);
   });
 
-  if (direction === 'desc') {
-    return quickSort(greaterItems, direction).concat(
-      ...middleItems,
-      ...quickSort(lowerItems, direction),
-    );
-  }
-
-  return quickSort(lowerItems, direction).concat(
+  return quickSort(lowerItems, compare).concat(
     ...middleItems,
-    ...quickSort(greaterItems, direction),
+    ...quickSort(greaterItems, compare),
   );
 };
