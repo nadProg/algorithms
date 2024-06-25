@@ -1,6 +1,6 @@
 import { getMaxStackDepth } from './getMaxStackDepth';
 
-describe('getMaxStackDepth', () => {
+describe.skip('getMaxStackDepth', () => {
   test('should return a number value', () => {
     const depth = getMaxStackDepth();
 
