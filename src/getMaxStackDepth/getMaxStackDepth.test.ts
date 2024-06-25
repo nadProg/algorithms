@@ -1,11 +1,11 @@
-import {getMaxStackDepth} from "./getMaxStackDepth";
+import { getMaxStackDepth } from "./getMaxStackDepth";
 
-describe('getMaxStackDepth', () => {
-    test('should return a number value', () => {
-        const depth = getMaxStackDepth();
+describe("getMaxStackDepth", () => {
+  test("should return a number value", () => {
+    const depth = getMaxStackDepth();
 
-        console.log({ depth });
+    console.log({ depth });
 
-        expect(typeof depth).toBe('number');
-    })
-})
+    expect(typeof depth).toBe("number");
+  });
+});
