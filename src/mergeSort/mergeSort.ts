@@ -1,12 +1,15 @@
-const mergeItems = (
-  itemsA: number[],
-  itemsB: number[],
-  direction: 'asc' | 'desc',
-): number[] => {
+import { defaultCompare } from '../defaultCompare';
+import type { CompareFunction } from '../types';
+
+const mergeItems = <T>(
+  itemsA: T[],
+  itemsB: T[],
+  compare: CompareFunction<T>,
+): T[] => {
   let indexA = 0;
   let indexB = 0;
 
-  const mergedItems: number[] = [];
+  const mergedItems: T[] = [];
 
   while (indexA < itemsA.length || indexB < itemsB.length) {
     const itemA = itemsA.at(indexA);
@@ -28,8 +31,7 @@ const mergeItems = (
       break;
     }
 
-    const isItemAPickedUp =
-      direction === 'desc' ? itemA > itemB : itemA < itemB;
+    const isItemAPickedUp = compare(itemA, itemB) < 0;
 
     if (isItemAPickedUp) {
       mergedItems.push(itemA);
@@ -44,10 +46,10 @@ const mergeItems = (
   return mergedItems;
 };
 
-export const mergeSort = (
-  items: number[],
-  direction: 'asc' | 'desc' = 'asc',
-): number[] => {
+export const mergeSort = <T>(
+  items: T[],
+  compare: CompareFunction<T> = defaultCompare,
+): T[] => {
   if (items.length <= 1) {
     return items;
   }
@@ -57,8 +59,8 @@ export const mergeSort = (
   const startItems = items.slice(0, middleIndex);
   const endItems = items.slice(middleIndex, items.length);
 
-  const sortedStartItems = mergeSort(startItems, direction);
-  const sortedEndItems = mergeSort(endItems, direction);
+  const sortedStartItems = mergeSort(startItems, compare);
+  const sortedEndItems = mergeSort(endItems, compare);
 
-  return mergeItems(sortedStartItems, sortedEndItems, direction);
+  return mergeItems(sortedStartItems, sortedEndItems, compare);
 };
