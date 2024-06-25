@@ -1,4 +1,5 @@
 import { defaultCompare } from '../defaultCompare';
+import { isUndefined } from '../isUndefined/isUndefined';
 import type { CompareFunction } from '../types';
 
 const mergeItems = <T>(
@@ -15,32 +16,42 @@ const mergeItems = <T>(
     const itemA = itemsA.at(indexA);
     const itemB = itemsB.at(indexB);
 
-    if (itemA === undefined && itemB !== undefined) {
-      mergedItems.push(itemB);
-      indexB++;
-      continue;
-    }
-
-    if (itemA !== undefined && itemB === undefined) {
-      mergedItems.push(itemA);
+    const mergeItemA = (item: T): void => {
+      mergedItems.push(item);
       indexA++;
+    };
+
+    const mergeItemB = (item: T): void => {
+      mergedItems.push(item);
+      indexB++;
+    };
+
+    const isNoItemsA = isUndefined(itemA) && !isUndefined(itemB);
+
+    if (isNoItemsA) {
+      mergeItemB(itemB);
       continue;
     }
 
-    if (itemA === undefined || itemB === undefined) {
+    const isNoItemsB = !isUndefined(itemA) && isUndefined(itemB);
+
+    if (isNoItemsB) {
+      mergeItemA(itemA);
+      continue;
+    }
+
+    const isNoItemsAtAll = isUndefined(itemA) || isUndefined(itemB);
+
+    if (isNoItemsAtAll) {
       break;
     }
 
-    const isItemAPickedUp = compare(itemA, itemB) < 0;
-
-    if (isItemAPickedUp) {
-      mergedItems.push(itemA);
-      indexA++;
+    if (compare(itemA, itemB) < 0) {
+      mergeItemA(itemA);
       continue;
     }
 
-    mergedItems.push(itemB);
-    indexB++;
+    mergeItemB(itemB);
   }
 
   return mergedItems;
