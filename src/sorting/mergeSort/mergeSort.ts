@@ -1,5 +1,5 @@
+import { isUndefined } from '@/utils/isUndefined';
 import { defaultCompare } from '../defaultCompare';
-import { isUndefined } from '../../utils/isUndefined';
 import type { CompareFunction } from '../types';
 
 const mergeItems = <T>(
