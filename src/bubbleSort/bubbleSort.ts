@@ -1,7 +1,10 @@
-export const bubbleSort = (
-  items: number[],
-  direction: 'asc' | 'desc' = 'asc',
-): number[] => {
+import { defaultCompare } from '../defaultCompare';
+import { CompareFunction } from '../types';
+
+export const bubbleSort = <T>(
+  items: T[],
+  compare: CompareFunction<T> = defaultCompare,
+): T[] => {
   const clonedItems = [...items];
 
   for (let i = 1; i < items.length; i++) {
@@ -11,7 +14,7 @@ export const bubbleSort = (
       const itemA = clonedItems[j];
       const itemB = clonedItems[j + 1];
 
-      const isToSwap = direction === 'desc' ? itemA < itemB : itemA > itemB;
+      const isToSwap = compare(itemA, itemB) > 0;
 
       if (isToSwap) {
         clonedItems[j] = itemB;
