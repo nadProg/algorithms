@@ -1,7 +1,7 @@
 const mergeItems = (
   itemsA: number[],
   itemsB: number[],
-  direction: "asc" | "desc",
+  direction: 'asc' | 'desc',
 ): number[] => {
   let indexA = 0;
   let indexB = 0;
@@ -29,7 +29,7 @@ const mergeItems = (
     }
 
     const isItemAPickedUp =
-      direction === "desc" ? itemA > itemB : itemA < itemB;
+      direction === 'desc' ? itemA > itemB : itemA < itemB;
 
     if (isItemAPickedUp) {
       mergedItems.push(itemA);
@@ -46,7 +46,7 @@ const mergeItems = (
 
 export const mergeSort = (
   items: number[],
-  direction: "asc" | "desc" = "asc",
+  direction: 'asc' | 'desc' = 'asc',
 ): number[] => {
   if (items.length <= 1) {
     return items;

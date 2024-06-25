@@ -1,6 +1,6 @@
 export const quickSort = (
   items: number[],
-  direction: "asc" | "desc" = "asc",
+  direction: 'asc' | 'desc' = 'asc',
 ): number[] => {
   if (items.length <= 1) {
     return items;
@@ -26,7 +26,7 @@ export const quickSort = (
     middleItems.push(item);
   });
 
-  if (direction === "desc") {
+  if (direction === 'desc') {
     return quickSort(greaterItems, direction).concat(
       ...middleItems,
       ...quickSort(lowerItems, direction),
