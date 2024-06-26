@@ -1,6 +1,5 @@
 import { isUndefined } from '@/utils/isUndefined';
-import { defaultCompare } from '../defaultCompare';
-import type { CompareFunction } from '../types';
+import { type CompareFunction, defaultCompare } from '@/compare';
 
 const mergeItems = <T>(
   itemsA: T[],

@@ -1,9 +1,6 @@
+import { compareNumbersAscending, compareNumbersDescending } from '@/compare';
 import { mergeSort as sort } from './mergeSort';
 import { caseFour, caseOne, caseThree, caseTwo } from '../testCases';
-import {
-  compareNumbersAscending,
-  compareNumbersDescending,
-} from '../compareNumbers/compareNumbers';
 
 describe('quickSort', () => {
   test('should exist', () => {

@@ -1,15 +1,21 @@
-export const binarySearch = (items: number[], target: number): number => {
+import { type CompareFunction, defaultCompare } from '@/compare';
+
+export const binarySearch = <T>(
+  items: T[],
+  target: T,
+  compare: CompareFunction<T> = defaultCompare,
+): number => {
   let leftIndex = 0;
   let rightIndex = items.length - 1;
 
   while (leftIndex <= rightIndex) {
     const middleIndex = Math.round((leftIndex + rightIndex) / 2);
 
-    if (items[middleIndex] === target) {
+    if (compare(items[middleIndex], target) === 0) {
       return middleIndex;
     }
 
-    if (items[middleIndex] < target) {
+    if (compare(items[middleIndex], target) < 0) {
       leftIndex = middleIndex + 1;
     } else {
       rightIndex = middleIndex - 1;

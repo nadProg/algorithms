@@ -1,5 +1,4 @@
-import { defaultCompare } from '../defaultCompare';
-import type { CompareFunction } from '../types';
+import { type CompareFunction, defaultCompare } from '@/compare';
 
 export const quickSort = <T>(
   items: T[],
