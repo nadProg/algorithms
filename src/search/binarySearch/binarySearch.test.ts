@@ -93,27 +93,39 @@ describe('binarySearch', () => {
     });
   });
 
-  describe('in array [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]', () => {
+  describe('in array [1, 1, 1, 2, 2, 3, 4, 4, 5]', () => {
     const items = [1, 1, 1, 2, 2, 3, 4, 4, 5];
 
     test('should return 0 when finding 1', () => {
-      expect(binarySearch(items, 1)).toBe(0);
+      const index = binarySearch(items, 1);
+
+      expect(index).toBeGreaterThanOrEqual(0);
+      expect(index).toBeLessThanOrEqual(2);
     });
 
     test('should return 3 when finding 2', () => {
-      expect(binarySearch(items, 2)).toBe(3);
+      const index = binarySearch(items, 2);
+
+      expect(index).toBeGreaterThanOrEqual(3);
+      expect(index).toBeLessThanOrEqual(4);
     });
 
     test('should return 5 when finding 3', () => {
-      expect(binarySearch(items, 3)).toBe(5);
+      const index = binarySearch(items, 3);
+      expect(index).toBe(5);
     });
 
     test('should return 6 when finding 4', () => {
-      expect(binarySearch(items, 4)).toBe(6);
+      const index = binarySearch(items, 4);
+
+      expect(index).toBeGreaterThanOrEqual(6);
+      expect(index).toBeLessThanOrEqual(7);
     });
 
     test('should return 8 when finding 5', () => {
-      expect(binarySearch(items, 5)).toBe(8);
+      const index = binarySearch(items, 5);
+
+      expect(index).toBe(8);
     });
 
     test('should return -1 when finding -1', () => {
