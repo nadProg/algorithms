@@ -4,7 +4,7 @@ export class HeapIndexService implements IHeapIndexService {
   public getParentIndex(nodeIndex: number): number | null {
     const nodeOrdinalNumber = this.getOrdinalNumberFromIndex(nodeIndex);
 
-    const isFirstNode = nodeOrdinalNumber === 1;
+    const isFirstNode = nodeOrdinalNumber <= 1;
 
     if (isFirstNode) {
       return null;

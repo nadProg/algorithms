@@ -17,6 +17,12 @@ describe('HeapIndexService', () => {
   });
 
   describe('getParentIndex', () => {
+    test('for index = -1 should return null', () => {
+      const index = -1;
+      const parentIndex = heapIndexService.getParentIndex(index);
+      expect(parentIndex).toBe(null);
+    });
+
     test('for index = 0 should return null', () => {
       const index = 0;
       const parentIndex = heapIndexService.getParentIndex(index);
