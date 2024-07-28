@@ -23,6 +23,10 @@ export class Heap<T> implements IHeap<T> {
     this.siftUpLastNode();
   }
 
+  public getRootNode(): T | null {
+    return this.heapNodes.at(0) ?? null;
+  }
+
   public extractRootNode(): T | null {
     this.swapNodesByIndexes(0, this.heapNodes.length - 1);
 
