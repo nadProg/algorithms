@@ -20,7 +20,7 @@ export class Heap<T> implements IHeap<T> {
 
   public addNode(item: T): void {
     this.pushNode(item);
-    this.siftUpLastNode();
+    this.siftLastNodeUp();
   }
 
   public getRootNode(): T | null {
@@ -32,7 +32,7 @@ export class Heap<T> implements IHeap<T> {
 
     const extractedRootNode = this.heapNodes.pop();
 
-    this.shiftDownRootNode();
+    this.shiftRootNodeDown();
 
     return extractedRootNode ?? null;
   }
@@ -89,7 +89,7 @@ export class Heap<T> implements IHeap<T> {
     return this.compare(parent, child) > 0;
   }
 
-  private siftUpLastNode(): void {
+  private siftLastNodeUp(): void {
     const lastChild = this.getNodeByIndex(this.heapNodes.length - 1);
 
     if (!lastChild) {
@@ -127,7 +127,7 @@ export class Heap<T> implements IHeap<T> {
     }
   }
 
-  private shiftDownRootNode(): void {
+  private shiftRootNodeDown(): void {
     const root = this.getNodeByIndex(0);
 
     if (!root) {
