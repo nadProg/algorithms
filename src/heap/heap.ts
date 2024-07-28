@@ -4,9 +4,9 @@ import { HeapIndexService } from './heap-index.service';
 import type { IHeap, IHeapIndexService } from './heap.interfaces';
 
 export class Heap<T> implements IHeap<T> {
-  heapNodes: T[] = [];
-  heapIndexService: IHeapIndexService;
-  compare: CompareFunction<T>;
+  private heapNodes: T[] = [];
+  private heapIndexService: IHeapIndexService;
+  private compare: CompareFunction<T>;
 
   constructor(nodes: T[], compare: CompareFunction<T> = defaultCompare) {
     this.compare = compare;
