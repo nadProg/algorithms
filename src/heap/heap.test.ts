@@ -864,7 +864,7 @@ describe('Heap', () => {
             expect(size).toBe(8);
           });
 
-          test('getSize after adding should return -1', () => {
+          test('getRootNode after adding should return -1', () => {
             const rootNode = heap.getRootNode();
             expect(rootNode).toBe(-1);
           });
@@ -884,7 +884,7 @@ describe('Heap', () => {
             expect(size).toBe(8);
           });
 
-          test('getSize after adding should return 0', () => {
+          test('getRootNode after adding should return 0', () => {
             const rootNode = heap.getRootNode();
             expect(rootNode).toBe(0);
           });
@@ -904,7 +904,7 @@ describe('Heap', () => {
             expect(size).toBe(8);
           });
 
-          test('getSize after adding should return 0', () => {
+          test('getRootNode after adding should return 0', () => {
             const rootNode = heap.getRootNode();
             expect(rootNode).toBe(0);
           });
@@ -981,7 +981,7 @@ describe('Heap', () => {
             expect(size).toBe(7);
           });
 
-          test('getSize after adding should return 0', () => {
+          test('getRootNode after adding should return 0', () => {
             const rootNode = heap.getRootNode();
             expect(rootNode).toBe(0);
           });
@@ -1001,7 +1001,7 @@ describe('Heap', () => {
             expect(size).toBe(7);
           });
 
-          test('getSize after adding should return 0', () => {
+          test('getRootNode after adding should return 0', () => {
             const rootNode = heap.getRootNode();
             expect(rootNode).toBe(0);
           });
