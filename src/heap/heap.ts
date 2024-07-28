@@ -1,10 +1,11 @@
-import { CompareFunction, defaultCompare } from '@/compare';
 import { isUndefined } from '@/utils/isUndefined';
+import { CompareFunction, defaultCompare } from '@/compare';
 import { HeapIndexService } from './heap-index.service';
+import type { NodeObject } from './heap.types';
 import type { IHeap, IHeapIndexService } from './heap.interfaces';
 
 export class Heap<T> implements IHeap<T> {
-  private heapNodes: T[] = [];
+  private nodes: T[] = [];
   private heapIndexService: IHeapIndexService;
   private compare: CompareFunction<T>;
 
@@ -15,7 +16,7 @@ export class Heap<T> implements IHeap<T> {
   }
 
   public getSize(): number {
-    return this.heapNodes.length;
+    return this.nodes.length;
   }
 
   public addNode(item: T): void {
@@ -24,21 +25,21 @@ export class Heap<T> implements IHeap<T> {
   }
 
   public getRootNode(): T | null {
-    return this.heapNodes.at(0) ?? null;
+    return this.nodes.at(0) ?? null;
   }
 
   public extractRootNode(): T | null {
-    this.swapNodesByIndexes(0, this.heapNodes.length - 1);
+    this.swapNodesByIndexes(0, this.nodes.length - 1);
 
-    const extractedRootNode = this.heapNodes.pop();
+    const extractedRootNode = this.nodes.pop();
 
-    this.shiftRootNodeDown();
+    this.siftRootNodeDown();
 
     return extractedRootNode ?? null;
   }
 
   private pushNode(item: T): void {
-    this.heapNodes.push(item);
+    this.nodes.push(item);
   }
 
   private initHeap(items: T[]): void {
@@ -48,38 +49,13 @@ export class Heap<T> implements IHeap<T> {
   }
 
   private swapNodesByIndexes(indexA: number, indexB: number): void {
-    const itemA = this.heapNodes[indexA];
-    const itemB = this.heapNodes[indexB];
-    this.heapNodes[indexA] = itemB;
-    this.heapNodes[indexB] = itemA;
+    const itemA = this.nodes[indexA];
+    const itemB = this.nodes[indexB];
+    this.nodes[indexA] = itemB;
+    this.nodes[indexB] = itemA;
   }
 
-  private getNodeByIndex(index: number): { node: T; index: number } | null {
-    const node = this.heapNodes.at(index);
-
-    if (isUndefined(node)) {
-      return null;
-    }
-
-    return {
-      node,
-      index,
-    };
-  }
-
-  private getParentByChildIndex(
-    index: number,
-  ): { node: T; index: number } | null {
-    const parentIndex = this.heapIndexService.getParentIndex(index);
-
-    if (parentIndex === null) {
-      return null;
-    }
-
-    return this.getNodeByIndex(parentIndex);
-  }
-
-  private isParentValidToChild({
+  private isParentChildPairValid({
     parent,
     child,
   }: {
@@ -90,112 +66,155 @@ export class Heap<T> implements IHeap<T> {
   }
 
   private siftLastNodeUp(): void {
-    const lastChild = this.getNodeByIndex(this.heapNodes.length - 1);
+    const lastNode = this.getLastNodeNodeObject();
 
-    if (!lastChild) {
+    if (!lastNode) {
       return;
     }
 
-    let currentChild = lastChild;
+    let currentLastNode = lastNode;
+    let currentParent = this.getParentNodeObjectByChildIndex(
+      currentLastNode.index,
+    );
 
-    if (!currentChild.node) {
-      return;
-    }
-
-    while (currentChild.index > 0) {
-      const parent = this.getParentByChildIndex(currentChild.index);
-
-      if (!parent) {
-        break;
+    const siftCurrentLastNodeUp = () => {
+      if (currentParent) {
+        currentLastNode = {
+          node: currentLastNode.node,
+          index: currentParent.index,
+        };
       }
+    };
 
-      const isParentValidToChild = this.isParentValidToChild({
-        parent: parent.node,
-        child: currentChild.node,
+    while (currentParent) {
+      const isCurrentParentChildPairValid = this.isParentChildPairValid({
+        parent: currentParent.node,
+        child: currentLastNode.node,
       });
 
-      if (isParentValidToChild) {
+      if (isCurrentParentChildPairValid) {
         break;
       }
 
-      this.swapNodesByIndexes(parent.index, currentChild.index);
+      this.swapNodesByIndexes(currentParent.index, currentLastNode.index);
 
-      currentChild = {
-        node: currentChild.node,
-        index: parent.index,
-      };
+      siftCurrentLastNodeUp();
+
+      currentParent = this.getParentNodeObjectByChildIndex(
+        currentLastNode.index,
+      );
     }
   }
 
-  private shiftRootNodeDown(): void {
-    const root = this.getNodeByIndex(0);
+  private siftRootNodeDown(): void {
+    const root = this.getRootNodeObject();
 
     if (!root) {
       return;
     }
 
     let currentRoot = root;
-    let currentFirstChild: { node: T; index: number } | null =
-      this.getNodeByIndex(
-        this.heapIndexService.getFirstChildIndex(currentRoot.index),
-      );
-    let currentSecondChild: { node: T; index: number } | null =
-      this.getNodeByIndex(
-        this.heapIndexService.getSecondChildIndex(currentRoot.index),
-      );
+    let maxChild = this.getMaxChildNodeObjectByParentIndex(currentRoot.index);
 
-    while (currentFirstChild || currentSecondChild) {
-      const maxChild = this.getMaxChild(currentFirstChild, currentSecondChild);
-
-      if (!maxChild) {
-        break;
+    const siftCurrentRootDown = () => {
+      if (maxChild) {
+        currentRoot = {
+          node: currentRoot.node,
+          index: maxChild.index,
+        };
       }
+    };
 
-      const isParentValidToChild = this.isParentValidToChild({
+    while (maxChild) {
+      const isCurrentParentChildPairValid = this.isParentChildPairValid({
         parent: currentRoot.node,
         child: maxChild.node,
       });
 
-      if (isParentValidToChild) {
+      if (isCurrentParentChildPairValid) {
         break;
       }
 
       this.swapNodesByIndexes(currentRoot.index, maxChild.index);
 
-      currentRoot = {
-        node: currentRoot.node,
-        index: maxChild.index,
-      };
+      siftCurrentRootDown();
 
-      currentFirstChild = this.getNodeByIndex(
-        this.heapIndexService.getFirstChildIndex(currentRoot.index),
-      );
-      currentSecondChild = this.getNodeByIndex(
-        this.heapIndexService.getSecondChildIndex(currentRoot.index),
-      );
+      maxChild = this.getMaxChildNodeObjectByParentIndex(currentRoot.index);
     }
   }
 
-  private getMaxChild(
-    nodeA: { node: T; index: number } | null,
-    nodeB: { node: T; index: number } | null,
-  ): { node: T; index: number } | null {
-    if (!nodeA && !nodeB) {
+  private getRootNodeObject(): NodeObject<T> | null {
+    return this.getNodeObjectByIndex(0);
+  }
+
+  private getLastNodeNodeObject(): NodeObject<T> | null {
+    return this.getNodeObjectByIndex(this.nodes.length - 1);
+  }
+
+  private getParentNodeObjectByChildIndex(
+    childIndex: number,
+  ): NodeObject<T> | null {
+    const parentIndex =
+      this.heapIndexService.getParentIndexByChildIndex(childIndex);
+
+    if (parentIndex === null) {
       return null;
     }
 
-    if (!nodeA) {
-      return nodeB;
+    return this.getNodeObjectByIndex(parentIndex);
+  }
+
+  private getMaxChildNodeObjectByParentIndex(
+    parentIndex: number,
+  ): NodeObject<T> | null {
+    const firstNode = this.getFirstChildNodeByParentIndex(parentIndex);
+    const secondNode = this.getSecondChildNodeByParentIndex(parentIndex);
+
+    if (!firstNode && !secondNode) {
+      return null;
     }
 
-    if (!nodeB) {
-      return nodeA;
+    if (!firstNode) {
+      return secondNode;
     }
 
-    if (this.compare(nodeA.node, nodeB.node) > 0) {
-      return nodeA;
+    if (!secondNode) {
+      return firstNode;
     }
 
-    return nodeB;
+    if (this.compare(firstNode.node, secondNode.node) > 0) {
+      return firstNode;
+    }
+
+    return secondNode;
+  }
+
+  private getFirstChildNodeByParentIndex(
+    parentIndex: number,
+  ): NodeObject<T> | null {
+    return this.getNodeObjectByIndex(
+      this.heapIndexService.getFirstChildIndexByParentIndex(parentIndex),
+    );
+  }
+
+  private getSecondChildNodeByParentIndex(
+    parentIndex: number,
+  ): NodeObject<T> | null {
+    return this.getNodeObjectByIndex(
+      this.heapIndexService.getSecondChildIndexByParentIndex(parentIndex),
+    );
+  }
+
+  private getNodeObjectByIndex(nodeIndex: number): NodeObject<T> | null {
+    const node = this.nodes.at(nodeIndex);
+
+    if (isUndefined(node)) {
+      return null;
+    }
+
+    return {
+      node,
+      index: nodeIndex,
+    };
   }
 }

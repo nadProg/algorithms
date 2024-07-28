@@ -1,7 +1,7 @@
 export interface IHeapIndexService {
-  getParentIndex(nodeIndex: number): number | null;
-  getFirstChildIndex(nodeIndex: number): number;
-  getSecondChildIndex(nodeIndex: number): number;
+  getParentIndexByChildIndex(nodeIndex: number): number | null;
+  getFirstChildIndexByParentIndex(nodeIndex: number): number;
+  getSecondChildIndexByParentIndex(nodeIndex: number): number;
 }
 
 export interface IHeap<T> {
