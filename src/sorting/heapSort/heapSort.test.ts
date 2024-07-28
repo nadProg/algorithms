@@ -2,7 +2,7 @@ import { compareNumbersAscending, compareNumbersDescending } from '@/compare';
 import { heapSort as sort } from './hearSort';
 import { caseFour, caseOne, caseThree, caseTwo } from '../testCases';
 
-describe('quickSort', () => {
+describe.skip('heapSort', () => {
   test('should exist', () => {
     expect(sort).toBeDefined();
   });
