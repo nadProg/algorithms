@@ -4,3 +4,4 @@ export {
   compareNumbersAscending,
   compareNumbersDescending,
 } from './compareNumbers/compareNumbers';
+export { getReverseCompare } from './getReverseCompare';

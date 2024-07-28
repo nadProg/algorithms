@@ -1,8 +1,8 @@
 import { compareNumbersAscending, compareNumbersDescending } from '@/compare';
-import { heapSort as sort } from './hearSort';
 import { caseFour, caseOne, caseThree, caseTwo } from '../testCases';
+import { heapSort as sort } from './hearSort';
 
-describe.skip('heapSort', () => {
+describe('heapSort', () => {
   test('should exist', () => {
     expect(sort).toBeDefined();
   });

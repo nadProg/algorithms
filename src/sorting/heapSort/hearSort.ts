@@ -1,12 +1,24 @@
-import { type CompareFunction, defaultCompare } from '@/compare';
+import {
+  type CompareFunction,
+  defaultCompare,
+  getReverseCompare,
+} from '@/compare';
+import { Heap } from '@/heap';
 
 export const heapSort = <T>(
   items: T[],
   compare: CompareFunction<T> = defaultCompare,
 ): T[] => {
-  if (items.length > 2) {
-    compare(items[0], items[1]);
+  const heap = new Heap(items, getReverseCompare(compare));
+
+  const sortedItems: T[] = [];
+
+  while (heap.getSize() > 0) {
+    const extractedRootNode = heap.extractRootNode();
+    if (extractedRootNode !== null) {
+      sortedItems.push(extractedRootNode);
+    }
   }
 
-  return [...items];
+  return sortedItems;
 };
