@@ -128,7 +128,7 @@ export class Heap<T> implements IHeap<T> {
   }
 
   private shiftDownRootNode(): void {
-    const root = this.getNodeByIndex(this.heapNodes.length - 1);
+    const root = this.getNodeByIndex(0);
 
     if (!root) {
       return;
@@ -141,7 +141,7 @@ export class Heap<T> implements IHeap<T> {
       );
     let currentSecondChild: { node: T; index: number } | null =
       this.getNodeByIndex(
-        this.heapIndexService.getFirstChildIndex(currentRoot.index),
+        this.heapIndexService.getSecondChildIndex(currentRoot.index),
       );
 
     while (currentFirstChild || currentSecondChild) {
@@ -167,8 +167,12 @@ export class Heap<T> implements IHeap<T> {
         index: maxChild.index,
       };
 
-      currentFirstChild = this.getNodeByIndex(currentRoot.index);
-      currentSecondChild = this.getNodeByIndex(currentRoot.index);
+      currentFirstChild = this.getNodeByIndex(
+        this.heapIndexService.getFirstChildIndex(currentRoot.index),
+      );
+      currentSecondChild = this.getNodeByIndex(
+        this.heapIndexService.getSecondChildIndex(currentRoot.index),
+      );
     }
   }
 
