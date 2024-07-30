@@ -1,4 +1,4 @@
-import { Queue } from './queue';
+import { Queue } from './Queue';
 
 describe('Queue', () => {
   describe('Default (empty) queue', () => {
