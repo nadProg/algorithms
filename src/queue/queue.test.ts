@@ -12,7 +12,7 @@ describe('Queue', () => {
 
     // [] -> []
     test('pop should return null', () => {
-      const poppedItem = queue.pop();
+      const poppedItem = queue.shift();
       expect(poppedItem).toBe(null);
     });
 
@@ -35,7 +35,7 @@ describe('Queue', () => {
 
     // [1] -> [0]
     test('pop should return 1', () => {
-      const poppedItem = queue.pop();
+      const poppedItem = queue.shift();
       expect(poppedItem).toBe(1);
     });
 
@@ -58,7 +58,7 @@ describe('Queue', () => {
 
     // [0, 5, 2, 6, 7] -> [5, 2, 6, 7]
     test('pop should return 0', () => {
-      const poppedItem = queue.pop();
+      const poppedItem = queue.shift();
       expect(poppedItem).toBe(0);
     });
 
@@ -92,7 +92,7 @@ describe('Queue', () => {
 
     // [5, 2, 6, 7, 1, 9] -> [2, 6, 7, 1, 9]
     test('pop should return 5', () => {
-      const poppedItem = queue.pop();
+      const poppedItem = queue.shift();
       expect(poppedItem).toBe(5);
     });
 
@@ -104,7 +104,7 @@ describe('Queue', () => {
 
     // [2, 6, 7, 1, 9] -> [6, 7, 1, 9]
     test('pop should return 2', () => {
-      const poppedItem = queue.pop();
+      const poppedItem = queue.shift();
       expect(poppedItem).toBe(2);
     });
 
@@ -116,7 +116,7 @@ describe('Queue', () => {
 
     // [6, 7, 1, 9] -> [7, 1, 9]
     test('pop should return 6', () => {
-      const poppedItem = queue.pop();
+      const poppedItem = queue.shift();
       expect(poppedItem).toBe(6);
     });
 
@@ -128,7 +128,7 @@ describe('Queue', () => {
 
     // [7, 1, 9] -> [1, 9]
     test('pop should return 7', () => {
-      const poppedItem = queue.pop();
+      const poppedItem = queue.shift();
       expect(poppedItem).toBe(7);
     });
 
@@ -140,7 +140,7 @@ describe('Queue', () => {
 
     // [1, 9] -> [9]
     test('pop should return 1', () => {
-      const poppedItem = queue.pop();
+      const poppedItem = queue.shift();
       expect(poppedItem).toBe(1);
     });
 
@@ -152,7 +152,7 @@ describe('Queue', () => {
 
     // [9] -> []
     test('pop should return 9', () => {
-      const poppedItem = queue.pop();
+      const poppedItem = queue.shift();
       expect(poppedItem).toBe(9);
     });
 
@@ -164,7 +164,7 @@ describe('Queue', () => {
 
     // [] -> []
     test('pop should return null', () => {
-      const poppedItem = queue.pop();
+      const poppedItem = queue.shift();
       expect(poppedItem).toBe(null);
     });
 

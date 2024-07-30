@@ -1,5 +1,5 @@
 export interface IQueue<T> {
   push(item: T): void;
-  pop(): T | null;
+  shift(): T | null;
   getSize(): number;
 }
