@@ -16,7 +16,7 @@ export class Queue<T> implements IQueue<T> {
     this.inboundStack.push(item);
   }
 
-  public pop(): T | null {
+  public shift(): T | null {
     if (this.isOutboundStackEmpty()) {
       this.transferInboundStackToOutbound();
     }
