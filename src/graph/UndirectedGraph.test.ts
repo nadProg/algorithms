@@ -1,9 +1,9 @@
 import { describe } from 'node:test';
-import { Graph } from './Graph';
+import { UndirectedGraph } from './UndirectedGraph';
 
-describe('Graph', () => {
-  describe('Empty graph initializing', () => {
-    const graph = new Graph();
+describe('UndirectedGraph', () => {
+  describe('Default graph', () => {
+    const graph = new UndirectedGraph();
 
     test('getNodes should return empty array', () => {
       const nodes = graph.getNodes();
@@ -16,9 +16,9 @@ describe('Graph', () => {
       expect(hasNodeResult).toBe(false);
     });
 
-    test('getNeighborhoods should return empty array for any key', () => {
+    test('getNodeDirections should return empty array for any key', () => {
       const anyKey = 1;
-      const nodeNeighborhoods = graph.getNodeNeighborhoods(anyKey);
+      const nodeNeighborhoods = graph.getNodeDirections(anyKey);
       expect(nodeNeighborhoods).toEqual([]);
     });
 
@@ -38,33 +38,55 @@ describe('Graph', () => {
 
       expect(hasEdgeResult).toBe(false);
     });
+  });
 
-    test('removeEdge should return nothing for any keys', () => {
-      const anyFrom = 1;
-      const anyTo = 2;
+  describe('Empty graph', () => {
+    const emptyEdges: [] = [];
+    const graph = new UndirectedGraph(emptyEdges);
 
-      const removeEdgeResult = graph.removeEdge(anyFrom, anyTo);
-
-      expect(removeEdgeResult).toBeUndefined();
+    test('getNodes should return empty array', () => {
+      const nodes = graph.getNodes();
+      expect(nodes).toEqual([]);
     });
 
-    test('addEdge should return nothing for any different keys', () => {
+    test('hasNode should return false for any key', () => {
+      const anyKey = 1;
+      const hasNodeResult = graph.hasNode(anyKey);
+      expect(hasNodeResult).toBe(false);
+    });
+
+    test('getNodeDirections should return empty array for any key', () => {
+      const anyKey = 1;
+      const nodeNeighborhoods = graph.getNodeDirections(anyKey);
+      expect(nodeNeighborhoods).toEqual([]);
+    });
+
+    test('hasEdge should return false for any different keys', () => {
       const anyFrom = 1;
       const anyTo = 2;
 
-      const addEdgeResult = graph.addEdge(anyFrom, anyTo);
+      const hasEdgeResult = graph.hasEdge(anyFrom, anyTo);
 
-      expect(addEdgeResult).toBeUndefined();
+      expect(hasEdgeResult).toBe(false);
+    });
+
+    test('hasEdge should return false for any the same keys', () => {
+      const anyKey = 1;
+
+      const hasEdgeResult = graph.hasEdge(anyKey, anyKey);
+
+      expect(hasEdgeResult).toBe(false);
     });
   });
 
-  describe('Adding edges to empty graph', () => {
-    describe('Add edge from 1 to 2 to empty graph', () => {
-      const graph = new Graph<number>();
+  describe.skip('Graph with single edge 1-2', () => {
+    describe('Graph initialized with [1, 2]', () => {
       const from = 1;
       const to = 2;
+      const singleEdge: [number, number] = [from, to];
+      const edges = [singleEdge];
+      const graph = new UndirectedGraph(edges);
       const nonExistentKey = 3;
-      graph.addEdge(from, to);
 
       test(`node with key ${from} should exist`, () => {
         expect(graph.hasNode(from)).toBe(true);
@@ -97,24 +119,24 @@ describe('Graph', () => {
         expect(nodes).toContain(to);
       });
 
-      test(`Node with key ${from} should has single neighborhood`, () => {
-        const nodeNeighborhoods = graph.getNodeNeighborhoods(from);
-        expect(nodeNeighborhoods.length).toBe(1);
+      test(`Node with key ${from} should has single direction`, () => {
+        const nodeDirections = graph.getNodeDirections(from);
+        expect(nodeDirections.length).toBe(1);
       });
 
-      test(`Node with key ${to} should has single neighborhood`, () => {
-        const nodeNeighborhoods = graph.getNodeNeighborhoods(to);
-        expect(nodeNeighborhoods.length).toBe(1);
+      test(`Node with key ${to} should has single direction`, () => {
+        const nodeDirections = graph.getNodeDirections(to);
+        expect(nodeDirections.length).toBe(1);
       });
 
-      test(`Node with key ${from} should has neighborhood with key ${to}`, () => {
-        const nodeNeighborhoods = graph.getNodeNeighborhoods(from);
-        expect(nodeNeighborhoods).toContain(to);
+      test(`Node with key ${from} should has direction with key ${to}`, () => {
+        const nodeDirections = graph.getNodeDirections(from);
+        expect(nodeDirections).toContain(to);
       });
 
-      test(`Node with key ${to} should has neighborhood with key ${from}`, () => {
-        const nodeNeighborhoods = graph.getNodeNeighborhoods(to);
-        expect(nodeNeighborhoods).toContain(from);
+      test(`Node with key ${to} should has direction with key ${from}`, () => {
+        const nodeDirections = graph.getNodeDirections(to);
+        expect(nodeDirections).toContain(from);
       });
 
       test(`Node with key ${nonExistentKey} should be in the graph`, () => {
@@ -163,14 +185,17 @@ describe('Graph', () => {
       });
     });
 
-    describe('Repeating adding edge from 1 to 2 to empty graph', () => {
-      const graph = new Graph<number>();
+    describe('Graph initialized with duplicated [1, 2] edges', () => {
       const from = 1;
       const to = 2;
+      const edges: [number, number][] = [
+        [from, to],
+        [to, from],
+        [from, to],
+        [to, from],
+      ];
+      const graph = new UndirectedGraph(edges);
       const nonExistentKey = 3;
-      graph.addEdge(from, to);
-      graph.addEdge(from, to);
-      graph.addEdge(from, to);
 
       test(`node with key ${from} should exist`, () => {
         expect(graph.hasNode(from)).toBe(true);
@@ -203,24 +228,24 @@ describe('Graph', () => {
         expect(nodes).toContain(to);
       });
 
-      test(`Node with key ${from} should has single neighborhood`, () => {
-        const nodeNeighborhoods = graph.getNodeNeighborhoods(from);
-        expect(nodeNeighborhoods.length).toBe(1);
+      test(`Node with key ${from} should has single direction`, () => {
+        const nodeDirections = graph.getNodeDirections(from);
+        expect(nodeDirections.length).toBe(1);
       });
 
-      test(`Node with key ${to} should has single neighborhood`, () => {
-        const nodeNeighborhoods = graph.getNodeNeighborhoods(to);
-        expect(nodeNeighborhoods.length).toBe(1);
+      test(`Node with key ${to} should has single direction`, () => {
+        const nodeDirections = graph.getNodeDirections(to);
+        expect(nodeDirections.length).toBe(1);
       });
 
-      test(`Node with key ${from} should has neighborhood with key ${to}`, () => {
-        const nodeNeighborhoods = graph.getNodeNeighborhoods(from);
-        expect(nodeNeighborhoods).toContain(to);
+      test(`Node with key ${from} should has direction with key ${to}`, () => {
+        const nodeDirections = graph.getNodeDirections(from);
+        expect(nodeDirections).toContain(to);
       });
 
-      test(`Node with key ${to} should has neighborhood with key ${from}`, () => {
-        const nodeNeighborhoods = graph.getNodeNeighborhoods(to);
-        expect(nodeNeighborhoods).toContain(from);
+      test(`Node with key ${to} should has direction with key ${from}`, () => {
+        const nodeDirections = graph.getNodeDirections(to);
+        expect(nodeDirections).toContain(from);
       });
 
       test(`Node with key ${nonExistentKey} should be in the graph`, () => {

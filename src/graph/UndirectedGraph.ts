@@ -1,8 +1,12 @@
 import type { IGraph } from './graph.interfaces';
-import type { NodesMap } from './graph.types';
+import type { InitEdge, NodesMap } from './graph.types';
 
-export class Graph<Key> implements IGraph<Key> {
+export class UndirectedGraph<Key> implements IGraph<Key> {
   private nodesMap: NodesMap<Key> = new Map();
+
+  constructor(edges: InitEdge<Key>[] = []) {
+    this.init(edges);
+  }
 
   public hasNode(key: Key): boolean {
     return this.nodesMap.has(key);
@@ -12,7 +16,7 @@ export class Graph<Key> implements IGraph<Key> {
     return Array.from(this.nodesMap.keys());
   }
 
-  public getNodeNeighborhoods(key: Key): Key[] {
+  public getNodeDirections(key: Key): Key[] {
     const nodeAdjacencySet = this.nodesMap.get(key);
 
     if (!nodeAdjacencySet) {
@@ -32,7 +36,13 @@ export class Graph<Key> implements IGraph<Key> {
     return nodeAdjacencySet.has(to);
   }
 
-  public addEdge(from: Key, to: Key): void {
+  private init(edges: InitEdge<Key>[]) {
+    edges.forEach(([from, to]) => {
+      this.addEdge(from, to);
+    });
+  }
+
+  private addEdge(from: Key, to: Key): void {
     this.lazyInitNode(from);
     this.lazyInitNode(to);
 
@@ -49,17 +59,5 @@ export class Graph<Key> implements IGraph<Key> {
     if (!this.hasNode(key)) {
       this.nodesMap.set(key, new Set<Key>());
     }
-  }
-
-  public removeEdge(from: Key, to: Key): void {
-    const fromAdjacencySet = this.nodesMap.get(from);
-    const toAdjacencySet = this.nodesMap.get(to);
-
-    if (!fromAdjacencySet || !toAdjacencySet) {
-      return;
-    }
-
-    fromAdjacencySet.delete(to);
-    toAdjacencySet.delete(from);
   }
 }
