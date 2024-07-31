@@ -1,3 +1,4 @@
+import { isNullish } from '@/utils/isNullish';
 import type { MatchFunction } from '@/compare';
 import type { IGraph } from '@/graph/graph.interfaces';
 
@@ -16,7 +17,7 @@ export const depthFirstSearch = <Key>(
     while (stack.length > 0) {
       const currentNode = stack.shift();
 
-      if (currentNode === undefined) {
+      if (isNullish(currentNode)) {
         break;
       }
 

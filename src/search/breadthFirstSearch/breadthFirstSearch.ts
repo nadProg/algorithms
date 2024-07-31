@@ -1,4 +1,5 @@
 import { Queue } from '@/queue';
+import { isNullish } from '@/utils/isNullish';
 import type { MatchFunction } from '@/compare';
 import type { IGraph } from '@/graph/graph.interfaces';
 
@@ -17,7 +18,7 @@ export const breadthFirstSearch = <Key>(
     while (queue.getSize() > 0) {
       const currentNode = queue.shift();
 
-      if (currentNode === null) {
+      if (isNullish(currentNode)) {
         break;
       }
 

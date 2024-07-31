@@ -4,6 +4,7 @@ import {
   getReverseCompare,
 } from '@/compare';
 import { Heap } from '@/heap';
+import { isNull } from '@/utils/isNull';
 
 export const heapSort = <T>(
   items: T[],
@@ -15,7 +16,7 @@ export const heapSort = <T>(
 
   while (heap.getSize() > 0) {
     const extractedRootNode = heap.extractRootNode();
-    if (extractedRootNode !== null) {
+    if (!isNull(extractedRootNode)) {
       sortedItems.push(extractedRootNode);
     }
   }

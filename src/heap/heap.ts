@@ -1,3 +1,4 @@
+import { isNull } from '@/utils/isNull';
 import { isUndefined } from '@/utils/isUndefined';
 import { CompareFunction, defaultCompare } from '@/compare';
 import { HeapIndexService } from './heap-index.service';
@@ -157,7 +158,7 @@ export class Heap<T> implements IHeap<T> {
     const parentIndex =
       this.heapIndexService.getParentIndexByChildIndex(childIndex);
 
-    if (parentIndex === null) {
+    if (isNull(parentIndex)) {
       return null;
     }
 
