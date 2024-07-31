@@ -13,3 +13,6 @@ export { getReverseCompare } from './getReverseCompare';
 
 export { defaultCheckEquality } from './defaultCheckEquality';
 export { checkNumbersEquality } from './checkNumbersEquality/checkNumbersEquality';
+
+export { matchEvenNumber } from './matchNumbers/matchEvenNumber';
+export { matchOddNumber } from './matchNumbers/matchOddNumber';
