@@ -1,4 +1,8 @@
-export type { CompareFunction, CheckEqualityFunction } from './types';
+export type {
+  CompareFunction,
+  CheckEqualityFunction,
+  MatchFunction,
+} from './types';
 
 export { defaultCompare } from './defaultCompare';
 export {
@@ -9,3 +13,6 @@ export { getReverseCompare } from './getReverseCompare';
 
 export { defaultCheckEquality } from './defaultCheckEquality';
 export { checkNumbersEquality } from './checkNumbersEquality/checkNumbersEquality';
+
+export { matchEvenNumber } from './matchNumbers/matchEvenNumber';
+export { matchOddNumber } from './matchNumbers/matchOddNumber';
