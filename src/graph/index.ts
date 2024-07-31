@@ -1,1 +1,1 @@
-export {};
+export { IGraph } from './graph.interfaces';

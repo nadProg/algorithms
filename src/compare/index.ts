@@ -1,4 +1,8 @@
-export type { CompareFunction, CheckEqualityFunction } from './types';
+export type {
+  CompareFunction,
+  CheckEqualityFunction,
+  MatchFunction,
+} from './types';
 
 export { defaultCompare } from './defaultCompare';
 export {
