@@ -1,12 +1,29 @@
 import { Tree } from './Tree';
 
 describe('Test', () => {
-  test('should be defined', () => {
-    expect(Tree).toBeDefined();
-  });
+  describe('Empty tree (root only)', () => {
+    const root = 1;
+    const emptyTree = new Tree(root);
 
-  test('should create an instance', () => {
-    const tree = new Tree(1);
-    expect(tree).toBeDefined();
+    test(`getRoot should return ${root} node`, () => {
+      const returnedRoot = emptyTree.getRoot();
+      expect(returnedRoot).toBe(root);
+    });
+
+    test(`getParent of root node ${root} should return null`, () => {
+      const rootParent = emptyTree.getParent(root);
+      expect(rootParent).toBe(null);
+    });
+
+    test(`getChildren of root node ${root} should return empty array`, () => {
+      const rootChildren = emptyTree.getChildren(root);
+      expect(rootChildren).toEqual([]);
+    });
+
+    test(`addChild to ${root} node should be handled`, () => {
+      const child = 2;
+
+      expect(emptyTree.addChild({ child, parent: root })).toBeUndefined();
+    });
   });
 });

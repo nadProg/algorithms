@@ -1,21 +1,34 @@
-import { ITree } from './tree.interfaces';
+import type { ITree } from './tree.interfaces';
 
-export class Tree<Key> implements ITree<Key> {
-  private root: Key;
+export class Tree<Node> implements ITree<Node> {
+  private root: Node;
+  private parentsMap: Map<Node, Node> = new Map<Node, Node>();
+  private childrenMap: Map<Node, Set<Node>> = new Map();
 
-  constructor(rootKey: Key) {
-    this.root = rootKey;
+  constructor(root: Node) {
+    this.root = root;
+    this.init();
   }
 
-  addChild({ childKey, parentKey }: { childKey: Key; parentKey: Key }): void {
-    console.log({ childKey, parentKey });
+  private init() {
+    this.childrenMap.set(this.root, new Set<Node>());
   }
 
-  getParent(childKey: Key): void {
-    console.log(childKey);
+  getRoot(): Node {
+    return this.root;
   }
 
-  getChildren(parentKey: Key): void {
-    console.log(parentKey);
+  getParent(child: Node): Node | null {
+    console.log(child);
+    return null;
+  }
+
+  getChildren(parent: Node): Node[] {
+    console.log(parent);
+    return [];
+  }
+
+  addChild({ child, parent }: { child: Node; parent: Node }): void {
+    console.log({ child, parent });
   }
 }
