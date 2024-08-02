@@ -1,23 +1,23 @@
 import type { IGraph } from './graph.interfaces';
 import type { InitEdge, NodesMap } from './graph.types';
 
-export class UndirectedGraph<Key> implements IGraph<Key> {
-  private nodesMap: NodesMap<Key> = new Map();
+export class UndirectedGraph<Node> implements IGraph<Node> {
+  private nodesMap: NodesMap<Node> = new Map();
 
-  constructor(edges: InitEdge<Key>[] = []) {
+  constructor(edges: InitEdge<Node>[] = []) {
     this.init(edges);
   }
 
-  public hasNode(key: Key): boolean {
-    return this.nodesMap.has(key);
+  public hasNode(node: Node): boolean {
+    return this.nodesMap.has(node);
   }
 
-  public getNodes(): Key[] {
+  public getNodes(): Node[] {
     return Array.from(this.nodesMap.keys());
   }
 
-  public getNodeDirections(key: Key): Key[] {
-    const nodeAdjacencySet = this.nodesMap.get(key);
+  public getNodeDirections(node: Node): Node[] {
+    const nodeAdjacencySet = this.nodesMap.get(node);
 
     if (!nodeAdjacencySet) {
       return [];
@@ -26,7 +26,7 @@ export class UndirectedGraph<Key> implements IGraph<Key> {
     return Array.from(nodeAdjacencySet);
   }
 
-  public hasEdge(from: Key, to: Key): boolean {
+  public hasEdge(from: Node, to: Node): boolean {
     const nodeAdjacencySet = this.nodesMap.get(from);
 
     if (!nodeAdjacencySet) {
@@ -36,13 +36,13 @@ export class UndirectedGraph<Key> implements IGraph<Key> {
     return nodeAdjacencySet.has(to);
   }
 
-  private init(edges: InitEdge<Key>[]) {
+  private init(edges: InitEdge<Node>[]) {
     edges.forEach(([from, to]) => {
       this.addEdge(from, to);
     });
   }
 
-  private addEdge(from: Key, to: Key): void {
+  private addEdge(from: Node, to: Node): void {
     this.lazyInitNode(from);
     this.lazyInitNode(to);
 
@@ -55,9 +55,9 @@ export class UndirectedGraph<Key> implements IGraph<Key> {
     }
   }
 
-  private lazyInitNode(key: Key): void {
-    if (!this.hasNode(key)) {
-      this.nodesMap.set(key, new Set<Key>());
+  private lazyInitNode(node: Node): void {
+    if (!this.hasNode(node)) {
+      this.nodesMap.set(node, new Set<Node>());
     }
   }
 }
