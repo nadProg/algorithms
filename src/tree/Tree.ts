@@ -14,21 +14,60 @@ export class Tree<Node> implements ITree<Node> {
     this.childrenMap.set(this.root, new Set<Node>());
   }
 
-  getRoot(): Node {
+  public getRoot(): Node {
     return this.root;
   }
 
-  getParent(child: Node): Node | null {
-    console.log(child);
-    return null;
+  public getParent(child: Node): Node | null {
+    return this.parentsMap.get(child) ?? null;
   }
 
-  getChildren(parent: Node): Node[] {
-    console.log(parent);
-    return [];
+  public getChildren(parent: Node): Node[] {
+    const parentChildrenSet = this.childrenMap.get(parent);
+
+    if (!parentChildrenSet) {
+      return [];
+    }
+
+    return Array.from(parentChildrenSet);
   }
 
-  addChild({ child, parent }: { child: Node; parent: Node }): void {
-    console.log({ child, parent });
+  public addChild({ child, parent }: { child: Node; parent: Node }): void {
+    if (this.addChildToChildrenMap({ child, parent })) {
+      this.addParentToParentsMap({ child, parent });
+      this.initChildrenForNode(child);
+    }
+  }
+
+  private addChildToChildrenMap({
+    child,
+    parent,
+  }: {
+    child: Node;
+    parent: Node;
+  }): boolean {
+    const parentChildren = this.childrenMap.get(parent);
+
+    if (!parentChildren) {
+      return false;
+    }
+
+    parentChildren.add(child);
+
+    return true;
+  }
+
+  private addParentToParentsMap({
+    child,
+    parent,
+  }: {
+    child: Node;
+    parent: Node;
+  }): void {
+    this.parentsMap.set(child, parent);
+  }
+
+  private initChildrenForNode(node: Node): void {
+    this.childrenMap.set(node, new Set());
   }
 }
