@@ -2,20 +2,21 @@ import { Queue } from '@/queue';
 import { type ITree } from '@/tree';
 import { isNullish } from '@/utils/isNullish';
 import type { IGraph } from './graph.interfaces';
-import type { NodesMap } from './graph.types';
+import { UndirectedGraph } from './UndirectedGraph';
 
 export class TreeToUndirectedGraphAdapter<Node> implements IGraph<Node> {
-  private tree: ITree<Node>;
-  private nodesMap: NodesMap<Node> = new Map();
+  private undirectedGraph: IGraph<Node>;
 
   constructor(tree: ITree<Node>) {
-    this.tree = tree;
-    this.init();
+    const treeEdges = this.getTreeEdges(tree);
+    this.undirectedGraph = new UndirectedGraph(treeEdges);
   }
 
-  private init(): void {
+  private getTreeEdges(tree: ITree<Node>): [Node, Node][] {
     const queue = new Queue<Node>();
-    queue.push(this.tree.getRoot());
+    queue.push(tree.getRoot());
+
+    const treeEdges: [Node, Node][] = [];
 
     while (queue.getSize() > 0) {
       const currentNode = queue.shift();
@@ -24,31 +25,28 @@ export class TreeToUndirectedGraphAdapter<Node> implements IGraph<Node> {
         break;
       }
 
-      let currentNodeDirectionsSet = this.nodesMap.get(currentNode);
-
-      if (!currentNodeDirectionsSet) {
-        currentNodeDirectionsSet = new Set<Node>();
-        this.nodesMap.set(currentNode, currentNodeDirectionsSet);
-      }
+      tree.getChildren(currentNode).forEach((child) => {
+        treeEdges.push([currentNode, child]);
+        queue.push(child);
+      });
     }
+
+    return treeEdges;
   }
 
   public getNodes(): Node[] {
-    return [];
+    return this.undirectedGraph.getNodes();
   }
 
   public getNodeDirections(node: Node): Node[] {
-    console.log(node);
-    return [];
+    return this.undirectedGraph.getNodeDirections(node);
   }
 
   public hasNode(node: Node): boolean {
-    console.log(node);
-    return false;
+    return this.undirectedGraph.hasNode(node);
   }
 
   public hasEdge(from: Node, to: Node): boolean {
-    console.log(from, to);
-    return false;
+    return this.undirectedGraph.hasEdge(from, to);
   }
 }
