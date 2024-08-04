@@ -1,4 +1,3 @@
-import { describe } from 'node:test';
 import { UndirectedGraph } from './UndirectedGraph';
 
 describe('UndirectedGraph', () => {

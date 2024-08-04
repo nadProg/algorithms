@@ -1,2 +1,2 @@
 export type { IGraph } from './graph.interfaces';
-export { UndirectedGraph } from './UndirectedGraph';
+export { UndirectedGraph } from './UndirectedGraph/UndirectedGraph';

@@ -1,4 +1,4 @@
-import { Tree } from '@/tree/Tree';
+import { Tree } from '@/tree';
 import { TreeToUndirectedGraphAdapter } from './TreeToUndirectedGraphAdapter';
 
 describe('TreeToUndirectedGraphAdapter', () => {

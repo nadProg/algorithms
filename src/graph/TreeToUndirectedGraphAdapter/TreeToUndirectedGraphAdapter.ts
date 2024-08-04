@@ -1,8 +1,8 @@
 import { Queue } from '@/queue';
 import { type ITree } from '@/tree';
 import { isNullish } from '@/utils/isNullish';
-import type { IGraph } from './graph.interfaces';
-import { UndirectedGraph } from './UndirectedGraph';
+import type { IGraph } from '../graph.interfaces';
+import { UndirectedGraph } from '../UndirectedGraph/UndirectedGraph';
 
 export class TreeToUndirectedGraphAdapter<Node> implements IGraph<Node> {
   private undirectedGraph: IGraph<Node>;

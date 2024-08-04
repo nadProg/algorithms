@@ -1,5 +1,5 @@
-import type { IGraph } from './graph.interfaces';
-import type { InitEdge, NodesMap } from './graph.types';
+import type { IGraph } from '../graph.interfaces';
+import type { InitEdge, NodesMap } from '../graph.types';
 
 export class UndirectedGraph<Node> implements IGraph<Node> {
   private nodesMap: NodesMap<Node> = new Map();
