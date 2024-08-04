@@ -1,8 +1,8 @@
-import { matchOddNumber } from '@/compare';
-import { UndirectedGraph } from '@/graph/UndirectedGraph';
+import { matchEvenNumber, matchOddNumber } from '@/compare';
+import { UndirectedGraph } from '@/graph';
 import { breadthFirstSearch as graphSearch } from './breadthFirstSearch';
 
-describe('breadthFirstSearch', () => {
+describe('Graph breadthFirstSearch', () => {
   describe('Empty graph', () => {
     const emptyGraph = new UndirectedGraph();
 
@@ -34,98 +34,26 @@ describe('breadthFirstSearch', () => {
     const graph = new UndirectedGraph(edges);
 
     describe('Default matching', () => {
-      const result = graphSearch(graph);
+      test('Should return array with all graph nodes: 0 1 2 3 4 5 6 7 8 9', () => {
+        const result = graphSearch(graph);
 
-      test('Should return array with 10 length', () => {
-        expect(result.length).toBe(10);
-      });
-
-      test('Should return array containing node with key = 0', () => {
-        expect(result).toContain(0);
-      });
-
-      test('Should return array containing node with key = 1', () => {
-        expect(result).toContain(1);
-      });
-
-      test('Should return array containing node with key = 2', () => {
-        expect(result).toContain(2);
-      });
-
-      test('Should return array containing node with key = 3', () => {
-        expect(result).toContain(3);
-      });
-
-      test('Should return array containing node with key = 4', () => {
-        expect(result).toContain(4);
-      });
-
-      test('Should return array containing node with key = 5', () => {
-        expect(result).toContain(5);
-      });
-
-      test('Should return array containing node with key = 6', () => {
-        expect(result).toContain(6);
-      });
-
-      test('Should return array containing node with key = 7', () => {
-        expect(result).toContain(7);
-      });
-
-      test('Should return array containing node with key = 8', () => {
-        expect(result).toContain(8);
-      });
-
-      test('Should return array containing node with key = 9', () => {
-        expect(result).toContain(9);
+        expect(result.sort()).toEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9].sort());
       });
     });
 
     describe('Odd numbers matching', () => {
-      const result = graphSearch(graph, matchOddNumber);
+      test('Should return array with nodes: 1 3 5 7 9', () => {
+        const result = graphSearch(graph, matchOddNumber);
 
-      test('Should return array with 5 length', () => {
-        expect(result.length).toBe(5);
+        expect(result.sort()).toEqual([1, 3, 5, 7, 9].sort());
       });
+    });
 
-      test('Should return array not containing node with key = 0', () => {
-        expect(result).not.toContain(0);
-      });
+    describe('Event numbers matching', () => {
+      test('Should return array with nodes: 0 2 4 6 8', () => {
+        const result = graphSearch(graph, matchEvenNumber);
 
-      test('Should return array containing node with key = 1', () => {
-        expect(result).toContain(1);
-      });
-
-      test('Should return array not containing node with key = 2', () => {
-        expect(result).not.toContain(2);
-      });
-
-      test('Should return array containing node with key = 3', () => {
-        expect(result).toContain(3);
-      });
-
-      test('Should return array not containing node with key = 4', () => {
-        expect(result).not.toContain(4);
-      });
-
-      test('Should return array containing node with key = 5', () => {
-        expect(result).toContain(5);
-      });
-
-      test('Should return array not containing node with key = 6', () => {
-        expect(result).not.toContain(6);
-      });
-
-      test('Should return array containing node with key = 7', () => {
-        expect(result).toContain(7);
-      });
-
-      test('Should return array not containing node with key = 8', () => {
-        expect(result).not.toContain(8);
-      });
-
-      test('Should return array containing node with key = 9', () => {
-        expect(result).toContain(9);
+        expect(result.sort()).toEqual([0, 2, 4, 6, 8].sort());
       });
     });
   });
@@ -148,98 +76,26 @@ describe('breadthFirstSearch', () => {
     const graph = new UndirectedGraph(edges);
 
     describe('Default matching', () => {
-      const result = graphSearch(graph);
+      test('Should return array with all graph nodes: 0 1 2 3 4 5 6 7 8 9', () => {
+        const result = graphSearch(graph);
 
-      test('Should return array with 10 length', () => {
-        expect(result.length).toBe(10);
-      });
-
-      test('Should return array containing node with key = 0', () => {
-        expect(result).toContain(0);
-      });
-
-      test('Should return array containing node with key = 1', () => {
-        expect(result).toContain(1);
-      });
-
-      test('Should return array containing node with key = 2', () => {
-        expect(result).toContain(2);
-      });
-
-      test('Should return array containing node with key = 3', () => {
-        expect(result).toContain(3);
-      });
-
-      test('Should return array containing node with key = 4', () => {
-        expect(result).toContain(4);
-      });
-
-      test('Should return array containing node with key = 5', () => {
-        expect(result).toContain(5);
-      });
-
-      test('Should return array containing node with key = 6', () => {
-        expect(result).toContain(6);
-      });
-
-      test('Should return array containing node with key = 7', () => {
-        expect(result).toContain(7);
-      });
-
-      test('Should return array containing node with key = 8', () => {
-        expect(result).toContain(8);
-      });
-
-      test('Should return array containing node with key = 9', () => {
-        expect(result).toContain(9);
+        expect(result.sort()).toEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9].sort());
       });
     });
 
     describe('Odd numbers matching', () => {
-      const result = graphSearch(graph, matchOddNumber);
+      test('Should return array with nodes: 1 3 5 7 9', () => {
+        const result = graphSearch(graph, matchOddNumber);
 
-      test('Should return array with 5 length', () => {
-        expect(result.length).toBe(5);
+        expect(result.sort()).toEqual([1, 3, 5, 7, 9].sort());
       });
+    });
 
-      test('Should return array not containing node with key = 0', () => {
-        expect(result).not.toContain(0);
-      });
+    describe('Event numbers matching', () => {
+      test('Should return array with nodes: 0 2 4 6 8', () => {
+        const result = graphSearch(graph, matchEvenNumber);
 
-      test('Should return array containing node with key = 1', () => {
-        expect(result).toContain(1);
-      });
-
-      test('Should return array not containing node with key = 2', () => {
-        expect(result).not.toContain(2);
-      });
-
-      test('Should return array containing node with key = 3', () => {
-        expect(result).toContain(3);
-      });
-
-      test('Should return array not containing node with key = 4', () => {
-        expect(result).not.toContain(4);
-      });
-
-      test('Should return array containing node with key = 5', () => {
-        expect(result).toContain(5);
-      });
-
-      test('Should return array not containing node with key = 6', () => {
-        expect(result).not.toContain(6);
-      });
-
-      test('Should return array containing node with key = 7', () => {
-        expect(result).toContain(7);
-      });
-
-      test('Should return array not containing node with key = 8', () => {
-        expect(result).not.toContain(8);
-      });
-
-      test('Should return array containing node with key = 9', () => {
-        expect(result).toContain(9);
+        expect(result.sort()).toEqual([0, 2, 4, 6, 8].sort());
       });
     });
   });

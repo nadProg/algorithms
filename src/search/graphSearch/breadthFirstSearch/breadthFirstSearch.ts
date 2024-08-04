@@ -1,18 +1,18 @@
 import { Queue } from '@/queue';
 import { isNullish } from '@/utils/isNullish';
 import type { MatchFunction } from '@/compare';
-import type { IGraph } from '@/graph/graph.interfaces';
+import type { IGraph } from '@/graph';
 
-export const breadthFirstSearch = <Key>(
-  graph: IGraph<Key>,
-  match: MatchFunction<Key> = () => true,
-): Key[] => {
+export const breadthFirstSearch = <Node>(
+  graph: IGraph<Node>,
+  match: MatchFunction<Node> = () => true,
+): Node[] => {
   const nodes = graph.getNodes();
-  const foundNodes: Key[] = [];
-  const visitedNodesSet = new Set<Key>();
+  const foundNodes: Node[] = [];
+  const visitedNodesSet = new Set<Node>();
 
-  for (const node of nodes) {
-    const queue = new Queue<Key>();
+  nodes.forEach((node) => {
+    const queue = new Queue<Node>();
     queue.push(node);
 
     while (queue.getSize() > 0) {
@@ -36,7 +36,7 @@ export const breadthFirstSearch = <Key>(
         }
       });
     }
-  }
+  });
 
   return foundNodes;
 };
