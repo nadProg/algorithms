@@ -1,15 +1,15 @@
 import type { MatchFunction } from '@/compare';
 import type { IGraph } from '@/graph';
 
-export const depthFirstSearchRecursive = <Key>(
-  graph: IGraph<Key>,
-  match: MatchFunction<Key> = () => true,
-): Key[] => {
+export const depthFirstSearchRecursive = <Node>(
+  graph: IGraph<Node>,
+  match: MatchFunction<Node> = () => true,
+): Node[] => {
   const nodes = graph.getNodes();
-  const visitedNodesSet = new Set<Key>();
-  const foundNodes: Key[] = [];
+  const visitedNodesSet = new Set<Node>();
+  const foundNodes: Node[] = [];
 
-  const recursiveSearch = (node: Key) => {
+  const recursiveSearch = (node: Node) => {
     if (visitedNodesSet.has(node)) {
       return;
     }
