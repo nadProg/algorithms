@@ -2,7 +2,7 @@ import { matchEvenNumber, matchOddNumber } from '@/compare';
 import { UndirectedGraph } from '@/graph';
 import { depthFirstSearch as graphSearch } from './depthFirstSearch';
 
-describe('depthFirstSearch', () => {
+describe('Graph depthFirstSearch', () => {
   describe('Empty graph', () => {
     const emptyGraph = new UndirectedGraph();
 

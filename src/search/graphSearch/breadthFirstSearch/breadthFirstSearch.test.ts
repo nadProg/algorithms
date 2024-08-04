@@ -2,7 +2,7 @@ import { matchEvenNumber, matchOddNumber } from '@/compare';
 import { UndirectedGraph } from '@/graph';
 import { breadthFirstSearch as graphSearch } from './breadthFirstSearch';
 
-describe('breadthFirstSearch', () => {
+describe('Graph breadthFirstSearch', () => {
   describe('Empty graph', () => {
     const emptyGraph = new UndirectedGraph();
 
