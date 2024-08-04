@@ -1,5 +1,5 @@
 import { matchEvenNumber, matchOddNumber } from '@/compare';
-import { UndirectedGraph } from '@/graph/UndirectedGraph';
+import { UndirectedGraph } from '@/graph';
 import { breadthFirstSearch as graphSearch } from './breadthFirstSearch';
 
 describe('breadthFirstSearch', () => {

@@ -1,7 +1,7 @@
 import { Queue } from '@/queue';
 import { isNullish } from '@/utils/isNullish';
 import type { MatchFunction } from '@/compare';
-import type { IGraph } from '@/graph/graph.interfaces';
+import type { IGraph } from '@/graph';
 
 export const breadthFirstSearch = <Key>(
   graph: IGraph<Key>,

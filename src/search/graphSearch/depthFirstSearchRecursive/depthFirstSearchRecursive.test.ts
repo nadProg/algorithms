@@ -1,8 +1,8 @@
 import { matchEvenNumber, matchOddNumber } from '@/compare';
-import { UndirectedGraph } from '@/graph/UndirectedGraph';
+import { UndirectedGraph } from '@/graph';
 import { depthFirstSearchRecursive as graphSearch } from './depthFirstSearchRecursive';
 
-describe.skip('depthFirstSearchRecursive', () => {
+describe('depthFirstSearchRecursive', () => {
   describe('Empty graph', () => {
     const emptyGraph = new UndirectedGraph();
 

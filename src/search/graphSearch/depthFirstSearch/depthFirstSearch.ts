@@ -1,6 +1,6 @@
 import { isNullish } from '@/utils/isNullish';
 import type { MatchFunction } from '@/compare';
-import type { IGraph } from '@/graph/graph.interfaces';
+import type { IGraph } from '@/graph';
 
 export const depthFirstSearch = <Key>(
   graph: IGraph<Key>,
