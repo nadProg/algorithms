@@ -11,7 +11,7 @@ export const breadthFirstSearch = <Key>(
   const foundNodes: Key[] = [];
   const visitedNodesSet = new Set<Key>();
 
-  for (const node of nodes) {
+  nodes.forEach((node) => {
     const queue = new Queue<Key>();
     queue.push(node);
 
@@ -36,7 +36,7 @@ export const breadthFirstSearch = <Key>(
         }
       });
     }
-  }
+  });
 
   return foundNodes;
 };

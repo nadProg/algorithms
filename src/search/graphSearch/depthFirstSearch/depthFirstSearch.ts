@@ -10,7 +10,7 @@ export const depthFirstSearch = <Key>(
   const foundNodes: Key[] = [];
   const visitedNodesSet = new Set<Key>();
 
-  for (const node of nodes) {
+  nodes.forEach((node) => {
     const stack = [];
     stack.push(node);
 
@@ -35,7 +35,7 @@ export const depthFirstSearch = <Key>(
         }
       });
     }
-  }
+  });
 
   return foundNodes;
 };
