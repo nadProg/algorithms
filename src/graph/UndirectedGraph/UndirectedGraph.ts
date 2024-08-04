@@ -1,11 +1,13 @@
 import type { IGraph } from '../graph.interfaces';
 import type { InitEdge, NodesMap } from '../graph.types';
+import { InitUndirectedGraphService } from './InitUndirectedGraphService';
 
 export class UndirectedGraph<Node> implements IGraph<Node> {
   private nodesMap: NodesMap<Node> = new Map();
 
   constructor(edges: InitEdge<Node>[] = []) {
-    this.init(edges);
+    const initUndirectedGraphService = new InitUndirectedGraphService<Node>();
+    this.nodesMap = initUndirectedGraphService.getNodesMapFromEdges(edges);
   }
 
   public hasNode(node: Node): boolean {
@@ -34,30 +36,5 @@ export class UndirectedGraph<Node> implements IGraph<Node> {
     }
 
     return nodeAdjacencySet.has(to);
-  }
-
-  private init(edges: InitEdge<Node>[]) {
-    edges.forEach(([from, to]) => {
-      this.addEdge(from, to);
-    });
-  }
-
-  private addEdge(from: Node, to: Node): void {
-    this.lazyInitNode(from);
-    this.lazyInitNode(to);
-
-    const fromAdjacencySet = this.nodesMap.get(from);
-    const toAdjacencySet = this.nodesMap.get(to);
-
-    if (fromAdjacencySet && toAdjacencySet) {
-      fromAdjacencySet.add(to);
-      toAdjacencySet.add(from);
-    }
-  }
-
-  private lazyInitNode(node: Node): void {
-    if (!this.hasNode(node)) {
-      this.nodesMap.set(node, new Set<Node>());
-    }
   }
 }
