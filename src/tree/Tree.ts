@@ -1,9 +1,9 @@
 import type { ITree } from './tree.interfaces';
 
 export class Tree<Node> implements ITree<Node> {
-  private root: Node;
-  private parentsMap: Map<Node, Node> = new Map<Node, Node>();
-  private childrenMap: Map<Node, Set<Node>> = new Map();
+  private readonly root: Node;
+  private readonly parentsMap: Map<Node, Node> = new Map<Node, Node>();
+  private readonly childrenMap: Map<Node, Set<Node>> = new Map();
 
   constructor(root: Node) {
     this.root = root;
