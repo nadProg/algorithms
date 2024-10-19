@@ -1,6 +1,6 @@
-export interface IGraph<Key> {
-  getNodes(): Key[];
-  hasNode(key: Key): boolean;
-  getNodeDirections(key: Key): Key[];
-  hasEdge(from: Key, to: Key): boolean;
+export interface IGraph<Node> {
+  getNodes(): Node[];
+  hasNode(node: Node): boolean;
+  getNodeDirections(node: Node): Node[];
+  hasEdge(from: Node, to: Node): boolean;
 }
